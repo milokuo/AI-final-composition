@@ -5,7 +5,7 @@ def csv2seq(foldername, filename, note):
         line = [line.strip("\n").split(", ") for line in f if len(line.split(", "))==6]
 
     division = int(line[0][-1])
-    scale = 1024/division # Normalize to 1024 division
+    scale = 1024/division
 
     df = pd.DataFrame(line, columns=["track", "time", "tipe", "channel", "note", "velocity"])
     df = df.loc[df.tipe.isin(["Note_on_c", "Note_off_c"])]
@@ -15,7 +15,6 @@ def csv2seq(foldername, filename, note):
     df.note = df.note.apply(lambda x: midi2note[int(x)])
     df.velocity = df.velocity.apply(int)
 
-    # Note_on_c with 0 velocity means Note_off_c
     df.tipe[(df.tipe=="Note_on_c") & (df.velocity==0)] = "Note_off_c"
     
     df.drop(["channel", "velocity"], axis=1, inplace=True)
