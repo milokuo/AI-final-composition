@@ -30,13 +30,20 @@ def main(input="default_model", output="mymusic"):
     idx_retry = 0
     while True:
         assert max(channel) <= 15
-        for i in range(len(channel)):
-            seq = sample(net, compose_len, prime=prime, top_k=top_k)
-            seq = " ".join(seq.split()[:-1])
-            seqs[i+1] = seq
-        seq2csv(seqs, fname, channel)
-        print(seqs)
-        break
+        try:
+            for i in range(len(channel)):
+                seq = sample(net, compose_len, prime=prime, top_k=top_k)
+                seq = " ".join(seq.split()[:-1])
+                seqs[i+1] = seq
+            seq2csv(seqs, fname, channel)
+            print(seqs)
+            break
+        except:
+            idx_retry += 1
+            print(f"Retry music composing... [{idx_retry}]")
+            if idx_retry == 10:
+                print("Music composition failed. Try to train the model longer")            
+                break
 
 
 
