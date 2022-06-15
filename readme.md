@@ -21,7 +21,7 @@ The project implemented the AI music generation through LSTM and Markov. The LST
 
 ## Usage
 To train the model:
-```python train.py```
+```python train.py```\
 Make sure you do have some music sheet in csv form in your dataset folder. You could convert the midi files of your sheet into csv through [MIDICSV](https://www.fourmilab.ch/webtools/midicsv/).
 
 To compose a song:
